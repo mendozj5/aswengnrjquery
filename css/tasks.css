@@ -98,6 +98,10 @@ input.large{
 	width:400px;
 }
 
+input.login{
+	width:100px;
+}
+
 select{
 	border:1px solid #AAA;
 	overflow:hidden;

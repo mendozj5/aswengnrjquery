@@ -1,239 +1,168 @@
-<!-- ------------------------------------------------------------------------- --
-  -- JJTM, FEB-19-2018
-	-- I downloaded jquery.tmpl.js from the internet.  Boris Moore is a name to
-	-- to remember when dealing with jquery.tmpl.js.   The book claims that there 
-	-- were plans to make jquery.tmpl.js part of the core JQuery library.   
-	-- Those plans were not implemented and jquery.tmp.js is for the most
-	-- part unsupported.
-	--
-	-- Despite the presence of HTML5 validation, this application will not use
-	-- it for 2 main reasons:
-	-- 1. All browsers do not support HTMLt validation.  It is necessary to rely
-	-- on polyfill for browsers that do not provide support.
-	-- 2. HTML5 validation does not play as nicely with JavaScript as many
-	-- would expect.  For example, HTML5 validators will not fire via
-	-- a Javascript submit() call.  HTML5 validators only fire if the user
-	-- clicks a submit button to post data to the server, or on a field by field
-	-- basis when the user presses enter in the field.  Since we will never
-	-- post data to the server, this is not helpful.
-	-- 
-	-- This appliation will use JQuery Validation library (i.e. jquery.validate.
-	-- min.js).  JQuery Validation relies on the same attributes as HTML5
-	-- where possible, so the required attributes are valid for both HTML5
-	-- and JQuery validation.
-	--
-	-- jQuery validation contains a large number of built in validators, these
-	-- allow a programmer to express rules for:
-	--
-	-- validating a required field has a value.
-	-- validating a field contains a number.
-	-- validating the length of input data.
-	-- validating a number is in range.
-	-- validating a field contains an e-mail address.
-	-- validating a field contains a possiblly valid credit card number.
-	-- 
-	-- In addition to these default validators; other validators
-	-- can be added.
-  -- ------------------------------------------------------------------------- -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<title>Task list</title>
-<link rel="stylesheet" type="text/css" href="./css/tasks.css" media="screen" />
-<script src="./javascript/jquery-3.2.1.js"></script>
-<script src="./javascript/jquery.tmpl.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-<script src="./javascript/jquery-serialization.js"></script>
-<script src="./javascript/tasks-webstorage.js"></script>
-<script src="./javascript/tasks-controller.js"></script>
-
+	<meta charset="utf-8">
+	<title>Task list</title>
+	<link rel="stylesheet" type="text/css" href="../css/tasks.css" media="screen" />
+	<script src="../javascript/jquery-3.2.1.js"></script>
+	<script src="../javascript/jquery.tmpl.js"></script>
+	<script src="../javascript/jquery.validate.min.js"></script>
+	<script src="../javascript/jquery-serialization.js"></script>
+	<!--script src="../javascript/tasks-webstorage.js"></script-->
+	<!--script src="../javascript/tasks-indexeddb.js"></script-->
+	<script src="../javascript/date.js"></script>
+	<script src="../javascript/tasks-controller.js"></script>
 </head>
+
 
 <body>
 
-<header>
-	<span>Task list</span>
-</header>
+	<!--nav id="formNav">
+		<a href="#" id="btnForm1">Main 1</a>
+		<a href="#" id="btnForm2">Main 2</a>
+	</nav-->
+	
+	<header>
+		<span>Task list</span>
+	</header>
 
-<!-- ------------------------------------------------------------------------- --
-	-- Begin taskPage.  Implies that one can define multiple pages (or mains)
-	-- in one file
-  -- ------------------------------------------------------------------------- -->
-<main id="taskPage">
+	
+	<!--25 start of main 1-->
+	<main id="taskPage">
+		
+		<section id="taskCreation"  class="not">
+			<form id="taskForm">
+				<input type="hidden" name="id"/>
 
-<section id="taskCreation"  class="not">
-<!-- ------------------------------------------------------------------------- --
-	-- Begin taskForm
-  -- ------------------------------------------------------------------------- -->
-<form id="taskForm">
-<input type="hidden" name="id"/>
-<div>
-<!-- ------------------------------------------------------------------------- --
-	-- JJTM, FEB-21-2018.
-	-- The required attribute is part of HTML5's specifications for form validation
-  -- ------------------------------------------------------------------------- -->
-<label>Task</label><input type="text" required="required" maxlength="200" name="task" class="large" placeholder="Breakfast at Tiffanyys" />
-</div>
-<div>
-<label>Required by</label><input type="date" required="required" name="requiredBy" />
-</div>
-<div>
-<label>Category</label><select name="category">
-<option value="Personal">Personal</option>
-<option value="Work">Work</option>
-</select>
-</div>
-<nav>
+				<div>
+					<label>Task</label><input type="text" required="required" maxlength="200" name="task" class="large" placeholder="Breakfast at Tiffanyys" />
+				</div>
 
-<a href="#" id="saveTask">Save task</a>
-<a href="#" id="clearTask">Clear task</a>
-</nav>
-</form>
-<!-- ------------------------------------------------------------------------- --
-	-- End taskForm
-  -- ------------------------------------------------------------------------- -->
-</section>
+				<div>
+					<label>Required by</label><input type="date" required="required" name="requiredBy" />
+				</div>
 
-<section>
-<table id="tblTasks">
-<colgroup>
-<col width="40%">
-<col width="15%">
-<col width="15%">
-<col width="30%">
-</colgroup>
-<thead>
-<tr>
-<th>Name</th>
-<th>Due</th>
-<th>Category</th>
-<th>Actions</th>
-</tr>
-</thead>
+				<div>
+					<label>Category</label><select name="category">
+					<option value="Personal">Personal</option>
+					<option value="Work">Work</option>
+					</select>
+				</div>
+		
+				<nav>
+					<a href="#" id="saveTask">Save task</a>
+					<a href="#" id="clearTask">Clear task</a>
+				</nav>
+			</form>
+		</section>
+		
+		<section>
+			<table id="tblTasks">
+				<colgroup>
+					<col width="40%">
+					<col width="15%">
+					<col width="15%">
+					<col width="30%">
+				</colgroup>
 
-<tbody>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Due</th>
+						<th>Category</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+		
+				<tbody>
+		
+		
+				</tbody>
+			</table>
+		
+			<nav>
+				<a href="#" id="btnAddTask">Add task</a>
+			</nav>
+		</section>
+		
+	</main>
+	<!--80 end of main 1-->
 
-<tr data-task-id="1">
-<td>Return library books</td>
-<td><time datetime="2013-10-14">2013-10-14</time></td>
-<td>Personal</td>
-<td>
-<nav>
-<a href="#" class="editRow">Edit</a>
-<a href="#" class="completeRow">Complete</a>
-<a href="#" class="deleteRow">Delete</a>
-</nav>
-</td>
-</tr>
-
-<tr class="even" data-task-id="2">
-<td>Perform project demo to stakeholders</td>
-<td><time datetime="2013-10-14">2013-10-14</time></td>
-<td>Work</td>
-<td>
-<nav>
-<a href="#" class="editRow">Edit</a>
-<a href="#" class="completeRow">Complete</a>
-<a href="#" class="deleteRow">Delete</a>
-</nav>
-</td>
-</tr>
-
-<tr data-task-id="3">
-<td>Meet friends for dinner</td>
-<td><time datetime="2013-10-14">2013-10-14</time></td>
-<td>Personal</td>
-<td>
-<nav>
-<a href="#" class="editRow">Edit</a>
-<a href="#" class="completeRow">Complete</a>
-<a href="#" class="deleteRow">Delete</a>
-</nav>
-</td>
-</tr>
-</tbody>
-</table>
-
-<nav>
-<!-- ----------------------------------------------------------- --
-	-- JJTM, January 10, 2018
-	-- Begin
-	-- ----------------------------------------------------------- -->
-<a href="#" id="btnAddTask">Add task</a>
-</nav>
-</section>
-
-</main>
-<!-- ------------------------------------------------------------------------- --
-	--  End taskPage
-  -- ------------------------------------------------------------------------- -->
-
-<footer>You have 3 tasks</footer>
+	<!--main id="taskLogonPage" class=not>
+		<label>Login:</label><input type="text" required="required" maxlength="10" name="login" class="login" placeholder="ogurat" />
+		<a href="#" id="verifyUser">Ok</a>
+	</main-->
+	
+	<footer>You have <span id="taskCount"></span> tasks</footer>
+	
 </body>
+
+
 <script>
-/*----------------------------------------------------------*
- *	Ideally, the browser starts processing scripts after
- *	the DOM has been constructed, even if all resources
- *	(such as images) have not been loaded.  It is possible
- *	that the browser processes scripts before the DOM
- *	has loaded, in which case elements will not be 
- *	available when selected.
- *
- *	Calling the $document.ready() is a callback of "DOM
- *	has fully loaded" event.
- *
- *	If there is a need to delay code execution until all
- *	resources have loaded, the load event can be used
- *	instead:  $(document).load()
- *----------------------------------------------------------*/
-$(document).ready(function(){
-		tasksController.init($('#taskPage'));
-		tasksController.loadTasks();
-	}/*	End of function definition.  Function passed as argment to ready. */
-)/*	End of call to ready function */
+	function initScreen(){
+		$(document).ready(function(){
+					tasksController.init($('#taskPage'),
+					function(){
+						tasksController.loadTasks();
+					}
+				);
+			}
+		);
+	}
+	
+/*
+	if (window.indexedDB){
+		$.getScript("../javascript/tasks-indexeddb.js").done(function(script, textStatus){ 
+											initScreen(); 
+										}).fail(function(jqxhr, settings, exception){ 
+												console.log('Failed to load indexed db script');}); 
+	} 
+	else if (window.localStorage){
+*/
+		$.getScript("../javascript/tasks-webstorage.js").done(function(script, textStatus) { 
+											initScreen();
+											}).fail(function(jqxhr, settings, exception ){ 
+												console.log('Failed to load web storage script');}); 
+/*
+	}
+*/
+
 </script>
 
-<!-- ------------------------------------------------------------------------- --
-  -- JJTM, FEB-19-2018
-	-- Begin
-	-- The following is a "row html template".
-  -- ------------------------------------------------------------------------- -->
+<!--
+APR-08-2018.  The following has been here, probably,
+from the 5th day after I started with the book.  But
+today is the day of realization.  Specifically,
+today is the realization of the following's importance
+to applications that use a grid.  I will comment the
+original and replace it with "taskCompleted" logic.
+
+The following deals with the browser's template 
+engine, I think.  I need to find out more about the
+template engine.  Is the template engine related to
+the stuff I read on Django.
+-->
 <script id="taskRow" type="text/x-JQuery-tmpl">
 	<tr>
-		<td>
-		${task} 
+		<td {{if complete==true}}class="taskCompleted"{{/if}}>${task}</td>
+
+		<td {{if complete==true}}class="taskCompleted"{{/if}}><time datetime="${requiredBy}">${requiredBy}</time>
 		</td>
 
-		<td>
-		<time datetime="${requiredBy}">${requiredBy}</time>
-		</td>
-
-		<td>
-		${category}
-		</td>
+		<td {{if complete==true}}class="taskCompleted"{{/if}}>${category}</td>
 
 		<td>
 			<nav>
-<!--
-				<a href="#">Edit</a>
--->
-				<a href="#" class="editRow" data-task-id="${id}">Edit</a>
-				<a href="#">Complete</a>
-<!--
-				<a href="#" class="deleteRow">Delete</a>
--->
+				{{if complete!=true}}
+					<a href="#" class="editRow" data-task-id="${id}">Edit</a>
+					<a href="#" class="completeRow" data-task-id="${id}">Complete</a>
+				{{/if}}
 				<a href="#" class="deleteRow" data-task-id="${id}">Delete</a>
 			</nav>
 		</td>
 	</tr>
 </script>
-<!-- ------------------------------------------------------------------------- --
-  -- JJTM, FEB-19-2018
-	-- End 
-	-- The following is a "row html template".
-  -- ------------------------------------------------------------------------- -->
 
 </html>
 

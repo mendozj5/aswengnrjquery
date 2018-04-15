@@ -1,3 +1,19 @@
+/*---------------------------------------------------------------------------------*
+ *Web storage API:
+ *
+ *Main advantage:
+ *1. Supported in all major browsers.
+ *2. Extremely simple to use.
+ *
+ *Main disadvantage:
+ *1. Only supports a maximum of 5MB data in some browsers.
+ *2. Accessing a minimal data set from a large data set may
+ *be time consuming.
+ *3. Access is fast when it is based on the item's key, but slow
+ *in any other scenario.
+ *4. Does not support transactions.
+ *5. Synchronous API and operates on the main browser thread.
+ *---------------------------------------------------------------------------------*/
 storageEngine = function() { 
 	var initialized = false; 
 	var initializedObjectStores = {}; 
@@ -120,7 +136,7 @@ storageEngine = function() {
 			if (!initialized) { 
 				errorCallback('storage_api_not_initialized', 'The storage engine has not been initialized'); 
 			} 
-			else if (!initializedObjectStores[ type]) { 
+			else if (!initializedObjectStores[type]) { 
 				errorCallback('store_not_initialized', 'The object store '+ type +' has not been initialized'); 
 			} 
 
